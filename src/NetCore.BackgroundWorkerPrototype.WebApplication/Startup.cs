@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NetCore.BackgroundWorkerPrototype.WebApplication.Dependencies;
 
 namespace NetCore.BackgroundWorkerPrototype.WebApplication
 {
@@ -18,6 +19,8 @@ namespace NetCore.BackgroundWorkerPrototype.WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(configuration);
+
+            services.AddSingleton<ISleeper, Sleeper>();
 
             services.AddControllers();
         }

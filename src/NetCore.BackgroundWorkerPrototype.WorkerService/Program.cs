@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NetCore.BackgroundWorkerPrototype.WorkerService.Dependencies;
 using System.Threading.Tasks;
 
 namespace NetCore.BackgroundWorkerPrototype.WorkerService
@@ -13,6 +14,7 @@ namespace NetCore.BackgroundWorkerPrototype.WorkerService
                 .ConfigureServices((_, services) =>
                     {
                         services.AddHostedService<Worker>();
+                        services.AddTransient<ISleeper, Sleeper>();
                     })
                 .Build()
                 .RunAsync()
