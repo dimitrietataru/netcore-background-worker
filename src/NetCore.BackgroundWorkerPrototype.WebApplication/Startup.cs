@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NetCore.BackgroundWorkerPrototype.WebApplication.Dependencies;
+using NetCore.BackgroundWorkerPrototype.WebApplication.Workers;
 
 namespace NetCore.BackgroundWorkerPrototype.WebApplication
 {
@@ -21,6 +22,7 @@ namespace NetCore.BackgroundWorkerPrototype.WebApplication
             services.AddSingleton(configuration);
 
             services.AddSingleton<ISleeper, Sleeper>();
+            services.AddSingleton<IHostedService, Worker>();
 
             services.AddControllers();
         }

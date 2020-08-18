@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NetCore.BackgroundWorkerPrototype.WorkerService.Dependencies;
+using NetCore.BackgroundWorkerPrototype.WorkerService.Workers;
 using System.Threading.Tasks;
 
 namespace NetCore.BackgroundWorkerPrototype.WorkerService
