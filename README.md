@@ -2,7 +2,7 @@
 
 ### Install
 ``` powershell
-PM> Install-Package Microsoft.Extensions.Hosting -Version 3.1.6
+PM> Install-Package Microsoft.Extensions.Hosting -Version 3.1.7
 ```
 
 ### Define a new Worker (with DI)
