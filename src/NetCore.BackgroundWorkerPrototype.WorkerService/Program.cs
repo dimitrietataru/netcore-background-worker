@@ -14,8 +14,8 @@ namespace NetCore.BackgroundWorkerPrototype.WorkerService
                 .CreateDefaultBuilder(args)
                 .ConfigureServices((_, services) =>
                     {
-                        services.AddHostedService<Worker>();
                         services.AddTransient<ISleeper, Sleeper>();
+                        services.AddHostedService<Worker>();
                     })
                 .Build()
                 .RunAsync()

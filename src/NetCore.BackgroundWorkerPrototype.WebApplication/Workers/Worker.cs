@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NetCore.BackgroundWorkerPrototype.WebApplication.Dependencies;
 using System;
@@ -9,17 +10,20 @@ namespace NetCore.BackgroundWorkerPrototype.WebApplication.Workers
 {
     public sealed class Worker : BackgroundService
     {
-        private readonly ISleeper sleeper;
+        private readonly IServiceProvider serviceProvider;
         private readonly ILogger<Worker> logger;
 
-        public Worker(ISleeper sleeper, ILogger<Worker> logger)
+        public Worker(IServiceProvider serviceProvider, ILogger<Worker> logger)
         {
-            this.sleeper = sleeper;
+            this.serviceProvider = serviceProvider;
             this.logger = logger;
         }
 
         protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
+            using var scope = serviceProvider.CreateScope();
+            var sleeper = scope.ServiceProvider.GetRequiredService<ISleeper>();
+
             while (!cancellationToken.IsCancellationRequested)
             {
                 cancellationToken.ThrowIfCancellationRequested();

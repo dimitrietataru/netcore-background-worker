@@ -1,23 +1,26 @@
 # .NET Core - Background Worker
 
-### Install
+## Install
 ``` powershell
-PM> Install-Package Microsoft.Extensions.Hosting -Version 3.1.7
+PM> Install-Package Microsoft.Extensions.Hosting -Version 3.1.8
 ```
 
-### Define a new Worker (with DI)
+## Structure
 ``` csharp
 public class Worker : BackgroundService
 {
-    private readonly IType dependency;
+    private readonly IServiceProvider serviceProvider;
 
-    public Worker(IType dependency)
+    public Worker(IServiceProvider serviceProvider)
     {
-        this.dependency = dependency;
+        this.serviceProvider = serviceProvider;
     }
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
+        using var scope = serviceProvider.CreateScope();
+        var type = scope.ServiceProvider.GetRequiredService<IType>();
+    
         while (!cancellationToken.IsCancellationRequested)
         {
             // ..
@@ -26,7 +29,7 @@ public class Worker : BackgroundService
 }
 ```
 
-### Worker Service setup
+## Setup - Worker Service
 ``` csharp
 public class Program
 {
@@ -36,8 +39,8 @@ public class Program
             .CreateDefaultBuilder(args)
             .ConfigureServices((_, services) =>
                 {
-                    services.AddHostedService<Worker>();
                     services.AddTransient<IType, Type>();
+                    services.AddHostedService<Worker>();
                 })
             .Build()
             .RunAsync()
@@ -46,7 +49,7 @@ public class Program
 }
 ```
 
-### Web Application setup
+## Setup - WebApp Worker
 ``` csharp
 public class Program
 {
@@ -67,14 +70,9 @@ public class Startup
     {
         // ..
 
-        services.AddSingleton<IType, Type>();
-        services.AddSingleton<IHostedService, Worker>();
+        services.AddScoped<IType, Type>();
+        services.AddHostedService<Worker>();
 
-        // ..
-    }
-
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
         // ..
     }
 }

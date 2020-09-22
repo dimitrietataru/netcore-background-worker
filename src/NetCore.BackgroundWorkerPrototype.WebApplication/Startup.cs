@@ -21,8 +21,8 @@ namespace NetCore.BackgroundWorkerPrototype.WebApplication
         {
             services.AddSingleton(configuration);
 
-            services.AddSingleton<ISleeper, Sleeper>();
-            services.AddSingleton<IHostedService, Worker>();
+            services.AddScoped<ISleeper, Sleeper>();
+            services.AddHostedService<Worker>();
 
             services.AddControllers();
         }
