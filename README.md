@@ -2,7 +2,7 @@
 
 ## Install
 ``` powershell
-PM> Install-Package Microsoft.Extensions.Hosting -Version 3.1.8
+PM> Install-Package Microsoft.Extensions.Hosting -Version 3.1.9
 ```
 
 ## Structure
