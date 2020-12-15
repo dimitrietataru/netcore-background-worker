@@ -1,8 +1,8 @@
-# .NET Core - Background Worker
+# .NET - Background Worker
 
 ## Install
 ``` powershell
-PM> Install-Package Microsoft.Extensions.Hosting -Version 3.1.10
+PM> Install-Package Microsoft.Extensions.Hosting -Version 5.0.0
 ```
 
 ## Structure
